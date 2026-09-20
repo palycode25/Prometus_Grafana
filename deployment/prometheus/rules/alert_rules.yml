@@ -1,0 +1,20 @@
+groups:
+  - name: bike-api-alerts
+    rules:
+      - alert: BikeApiDown
+        expr: up{job="bike_api"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "L'API Bike Sharing est injoignable."
+          description: "Le job 'bike_api' est en statut DOWN depuis plus de 1 minute. Vérifiez le conteneur `bike-api`."
+
+      - alert: HighModelRMSE
+        expr: model_rmse_score > 150
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Le RMSE du modèle Bike Sharing est anormalement élevé."
+          description: "model_rmse_score dépasse 150 depuis plus de 2 minutes, ce qui indique une possible dégradation ou dérive du modèle."

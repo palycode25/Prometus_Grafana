@@ -1,0 +1,77 @@
+{
+  "uid": "model-performance-drift-dashboard",
+  "title": "Model Performance & Drift",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "10s",
+  "time": { "from": "now-6h", "to": "now" },
+  "templating": { "list": [] },
+  "panels": [
+    {
+      "id": 1,
+      "title": "Model RMSE",
+      "type": "stat",
+      "datasource": "Prometheus",
+      "gridPos": { "x": 0, "y": 0, "w": 6, "h": 6 },
+      "targets": [ { "expr": "model_rmse_score", "refId": "A" } ]
+    },
+    {
+      "id": 2,
+      "title": "Model MAE",
+      "type": "stat",
+      "datasource": "Prometheus",
+      "gridPos": { "x": 6, "y": 0, "w": 6, "h": 6 },
+      "targets": [ { "expr": "model_mae_score", "refId": "A" } ]
+    },
+    {
+      "id": 3,
+      "title": "Model R2 Score",
+      "type": "stat",
+      "datasource": "Prometheus",
+      "gridPos": { "x": 12, "y": 0, "w": 6, "h": 6 },
+      "targets": [ { "expr": "model_r2_score", "refId": "A" } ]
+    },
+    {
+      "id": 4,
+      "title": "Model MAPE (%)",
+      "type": "stat",
+      "datasource": "Prometheus",
+      "gridPos": { "x": 18, "y": 0, "w": 6, "h": 6 },
+      "targets": [ { "expr": "model_mape_score", "refId": "A" } ]
+    },
+    {
+      "id": 5,
+      "title": "Data Drift Score (share of drifted features)",
+      "type": "stat",
+      "datasource": "Prometheus",
+      "gridPos": { "x": 0, "y": 6, "w": 12, "h": 8 },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 0.3 },
+              { "color": "red", "value": 0.5 }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "targets": [ { "expr": "model_data_drift_score", "refId": "A" } ]
+    },
+    {
+      "id": 6,
+      "title": "RMSE / MAE / MAPE over time",
+      "type": "timeseries",
+      "datasource": "Prometheus",
+      "gridPos": { "x": 12, "y": 6, "w": 12, "h": 8 },
+      "targets": [
+        { "expr": "model_rmse_score", "legendFormat": "RMSE", "refId": "A" },
+        { "expr": "model_mae_score", "legendFormat": "MAE", "refId": "B" },
+        { "expr": "model_mape_score", "legendFormat": "MAPE", "refId": "C" }
+      ]
+    }
+  ]
+}
