@@ -1,4 +1,4 @@
-# Bike Sharing MLOps Monitoring — Rendu d'examen
+# Bike Sharing MLOps Monitoring
 
 ## 1. Objectif du projet
 
